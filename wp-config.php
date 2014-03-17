@@ -22,7 +22,7 @@ define('DB_NAME', 'lacviet');
 define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'public123');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
