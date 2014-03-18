@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Nap tien (III)
+Plugin Name: Quan Tri (Admin)
 Plugin URI: http://
-Description: Plugin thuc hien chuc nang Dai ly thong bao nap tien vao tai khoan den he thong, He thong kiem tra va kich hoat thong tin nap tien cua dai ly.
+Description: Plugin thuc hien chuc nang quan ly thong tin nap tien cua dai ly va quan ly khach hang.
 Version: 1.0.0
 Author: BieuHv
 Author URI: http://
