@@ -10,7 +10,7 @@
  * @subpackage Functions
  */
 
-class WP_CRM_F {
+class DaiLy_F {
 
   /**
    * Detailed Activity Log
@@ -37,7 +37,7 @@ class WP_CRM_F {
       )
     ));
 
-    $activity_log = WP_CRM_F::get_events( $args );
+    $activity_log = DaiLy_F::get_events( $args );
 
     $_resolved = array();
     $_locations = get_transient( '_wpc_geolocation' );
@@ -64,7 +64,7 @@ class WP_CRM_F {
           }
 
           if( $entry->value ) {
-            $activity_log[ $count ]->location = $_locations[ $entry->value ] ? $_locations[ $entry->value ] : $_locations[ $entry->value ] = WP_CRM_F::get_service( 'geolocation', '', $entry->value, array( 'json' ) );
+            $activity_log[ $count ]->location = $_locations[ $entry->value ] ? $_locations[ $entry->value ] : $_locations[ $entry->value ] = DaiLy_F::get_service( 'geolocation', '', $entry->value, array( 'json' ) );
           }
 
         break;
@@ -77,7 +77,7 @@ class WP_CRM_F {
           }
 
           if( $entry->value ) {
-            $activity_log[ $count ]->location = $_locations[ $entry->value ] ? $_locations[ $entry->value ] : $_locations[ $entry->value ] = WP_CRM_F::get_service( 'geolocation', '', $entry->value, array( 'json' ) );
+            $activity_log[ $count ]->location = $_locations[ $entry->value ] ? $_locations[ $entry->value ] : $_locations[ $entry->value ] = DaiLy_F::get_service( 'geolocation', '', $entry->value, array( 'json' ) );
           }
 
         break;
@@ -266,8 +266,8 @@ class WP_CRM_F {
    */
   function track_detailed_user_activity() {
 
-    add_action('password_reset', create_function('$user', '  WP_CRM_F::insert_event(array("object_id"=> $user->ID, "attribute" => "detailed_log", "other" => 5, "action" => "password_reset")); '));
-    add_action('wp_login', create_function('$user_login', ' $user = get_userdatabylogin($user_login);  WP_CRM_F::insert_event(array("object_id"=> $user->ID, "attribute" => "detailed_log", "other" => 2, "action" => "login")); '));
+    add_action('password_reset', create_function('$user', '  DaiLy_F::insert_event(array("object_id"=> $user->ID, "attribute" => "detailed_log", "other" => 5, "action" => "password_reset")); '));
+    add_action('wp_login', create_function('$user_login', ' $user = get_userdatabylogin($user_login);  DaiLy_F::insert_event(array("object_id"=> $user->ID, "attribute" => "detailed_log", "other" => 2, "action" => "login")); '));
 
   }
 
@@ -352,12 +352,12 @@ class WP_CRM_F {
 
         /* All profiles */
     if(count($wp_filter['personal_options'])) {
-      add_meta_box( 'wp_crm_personal_options', __('Personal Options', 'wp_crm') , array('WP_CRM_F', 'personal_options') , 'crm_page_wp_crm_add_new', 'normal', 'default');
+      add_meta_box( 'wp_crm_personal_options', __('Personal Options', 'wp_crm') , array('DaiLy_F', 'personal_options') , 'crm_page_wp_crm_add_new', 'normal', 'default');
     }
 
     /* Non-self profile */
     if(!$own_profile && count($wp_filter['edit_user_profile'])) {
-      add_meta_box( 'wp_crm_edit_self_profile',  __('Additional Settings', 'wp_crm'), array('WP_CRM_F', 'edit_user_profile') , 'crm_page_wp_crm_add_new', 'normal', 'default');
+      add_meta_box( 'wp_crm_edit_self_profile',  __('Additional Settings', 'wp_crm'), array('DaiLy_F', 'edit_user_profile') , 'crm_page_wp_crm_add_new', 'normal', 'default');
     }
 
     /* Self Profile  - Included into Special Actions box */
@@ -700,9 +700,9 @@ class WP_CRM_F {
       <ul class="user_card_data">
         <li class='primary'>
           <?php if(current_user_can('WP-CRM: View Profiles')) { ?>
-          <a href='<?php echo admin_url("admin.php?page=wp_crm_add_new&user_id={$user_id}"); ?>'><?php echo WP_CRM_F::get_primary_display_value($user_object); ?></a>
+          <a href='<?php echo admin_url("admin.php?page=wp_crm_add_new&user_id={$user_id}"); ?>'><?php echo DaiLy_F::get_primary_display_value($user_object); ?></a>
           <?php } else { ?>
-          <?php echo WP_CRM_F::get_primary_display_value($user_object); ?>
+          <?php echo DaiLy_F::get_primary_display_value($user_object); ?>
           <?php } ?>
         </li>
         <?php foreach($user_card_attributes as $key) { ?>
@@ -712,9 +712,9 @@ class WP_CRM_F {
               unset($visible_options);
 
               if($wp_crm['data_structure']['attributes'][$key]['has_options']) {
-                $visible_options = WP_CRM_F::list_options($user_object, $key);
+                $visible_options = DaiLy_F::list_options($user_object, $key);
               } else {
-                $visible_options[] = apply_filters('wp_crm_display_' . $key, WP_CRM_F::get_first_value($user_object[$key]),$user_id, $user_object,  'user_card');
+                $visible_options[] = apply_filters('wp_crm_display_' . $key, DaiLy_F::get_first_value($user_object[$key]),$user_id, $user_object,  'user_card');
               }
 
               if(is_array($visible_options)) {
@@ -762,9 +762,9 @@ class WP_CRM_F {
     $wp_crm_search = $filters['wp_crm_search'];
 
     //** Get users from filter query */
-    $user_ids = WP_CRM_F::user_search($wp_crm_search, array('ids_only' => 'true'));
+    $user_ids = DaiLy_F::user_search($wp_crm_search, array('ids_only' => 'true'));
 
-    $quantifiable_attributes = WP_CRM_F::get_quantifiable_attributes();
+    $quantifiable_attributes = DaiLy_F::get_quantifiable_attributes();
 
     if(!$quantifiable_attributes || !$user_ids) {
     return;
@@ -994,7 +994,7 @@ class WP_CRM_F {
 
       $primary_columns = $wpdb->get_col("SHOW COLUMNS FROM {$wpdb->users}");
 
-      $results = WP_CRM_F::user_search($wp_crm_search);
+      $results = DaiLy_F::user_search($wp_crm_search);
 
       foreach($results as $result) {
 
@@ -1212,7 +1212,7 @@ class WP_CRM_F {
 
           $user_id = wp_insert_user($user_data);
 
-          $meta_data['wp_crm_fake_user'] = true;
+          $meta_data['DaiLy_Fake_user'] = true;
 
           if($user_id && !is_wp_error($user_id)) {
 
@@ -1263,7 +1263,7 @@ class WP_CRM_F {
       if($args['do_what'] == 'remove') {
 
         //** Get all fake users */
-        $fake_users = $wpdb->get_col("SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = 'wp_crm_fake_user' AND meta_value =1");
+        $fake_users = $wpdb->get_col("SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = 'DaiLy_Fake_user' AND meta_value =1");
 
         if($fake_users) {
           foreach($fake_users as $user_id) {
@@ -1448,8 +1448,8 @@ class WP_CRM_F {
       }
 
       //** Parse the serialized filters array */
-      parse_str($_REQUEST['wp_crm_filter_vars'], $wp_crm_filter_vars);
-      $wp_crm_search = $wp_crm_filter_vars['wp_crm_search'];
+      parse_str($_REQUEST['DaiLy_Filter_vars'], $DaiLy_Filter_vars);
+      $wp_crm_search = $DaiLy_Filter_vars['wp_crm_search'];
 
       //* Init table object */
       $wp_list_table = new CRM_User_List_Table("ajax=true&per_page={$per_page}&iDisplayStart={$iDisplayStart}&iColumns={$iColumns}");
@@ -1820,7 +1820,7 @@ class WP_CRM_F {
         }
 
         if($primary_user_attribute = $wp_crm['configuration']['primary_user_attribute']) {
-          $primary_user_attribute = WP_CRM_F::get_first_value($user_object[$primary_user_attribute]);
+          $primary_user_attribute = DaiLy_F::get_first_value($user_object[$primary_user_attribute]);
 
           if(!empty($primary_user_attribute)) {
             $return = $primary_user_attribute;
@@ -1835,7 +1835,7 @@ class WP_CRM_F {
 
           foreach($attribute_keys as $key) {
 
-            if($return = WP_CRM_F::get_first_value($user_object[$key])) {
+            if($return = DaiLy_F::get_first_value($user_object[$key])) {
               break;
             }
 
@@ -1844,7 +1844,7 @@ class WP_CRM_F {
 
         //** Default to user_login */
         if(!$return || is_array($return)) {
-          $return = WP_CRM_F::get_first_value($user_object['user_login']);
+          $return = DaiLy_F::get_first_value($user_object['user_login']);
         }
 
         //** Return values */
@@ -1968,7 +1968,7 @@ class WP_CRM_F {
 
       if(!empty($installed_ver)) {
         //** Handle any updates related to version changes */
-        WP_CRM_F::handle_update($installed_ver);
+        DaiLy_F::handle_update($installed_ver);
       }
 
       // Unschedule event
@@ -1983,7 +1983,7 @@ class WP_CRM_F {
       update_option( "wp_crm_version", WP_CRM_Version );
 
       //** Get premium features on activation */
-      @WP_CRM_F::feature_check();
+      @DaiLy_F::feature_check();
 
       $args['update_caps'] = 'true';
       //$args['auto_redirect'] = 'true';
@@ -2450,7 +2450,7 @@ class WP_CRM_F {
       }
 
       //* Regenerate possible meta keys */
-      $wp_crm_settings['data_structure'] = WP_CRM_F::build_meta_keys( $wp_crm_settings);
+      $wp_crm_settings['data_structure'] = DaiLy_F::build_meta_keys( $wp_crm_settings);
 
       update_option('wp_crm_settings', $wp_crm_settings);
 
@@ -2521,7 +2521,7 @@ class WP_CRM_F {
         $wp_crm['configuration']['primary_user_attribute'] = 'display_name';
 
         $wp_crm['wp_crm_contact_system_data']['example_form']['title'] = __('Example Shortcode Form', 'wp_crm');
-        $wp_crm['wp_crm_contact_system_data']['example_form']['full_shortcode'] = '[wp_crm_form form=example_contact_form]';
+        $wp_crm['wp_crm_contact_system_data']['example_form']['full_shortcode'] = '[DaiLy_Form form=example_contact_form]';
         $wp_crm['wp_crm_contact_system_data']['example_form']['current_form_slug'] = 'example_contact_form';
         $wp_crm['wp_crm_contact_system_data']['example_form']['message_field'] = 'on';
         $wp_crm['wp_crm_contact_system_data']['example_form']['fields'] = array('display_name','user_email', 'company', 'phone_number');
@@ -2538,7 +2538,7 @@ class WP_CRM_F {
         $wp_crm['notifications']['message_notification']['message'] = __("Shortcode Form: [trigger_action]\nSender Name: [display_name]\nSender Email: [user_email]\nMessage: [message_content]", 'wp_crm');
         $wp_crm['notifications']['message_notification']['fire_on_action'] = array('example_form');
 
-        $wp_crm['data_structure'] = WP_CRM_F::build_meta_keys( $wp_crm);
+        $wp_crm['data_structure'] = DaiLy_F::build_meta_keys( $wp_crm);
 
         //** Commit defaults to DB */
         update_option('wp_crm_settings', $wp_crm);
@@ -2623,7 +2623,7 @@ class WP_CRM_F {
   function check_plugin_updates() {
     global $wp_crm;
 
-    echo WP_CRM_F::feature_check(true);
+    echo DaiLy_F::feature_check(true);
 
   }
 
@@ -2755,10 +2755,10 @@ class WP_CRM_F {
     }
 
     // Update settings
-    WP_CRM_F::settings_action(true);
+    DaiLy_F::settings_action(true);
 
     //** May not be a good place to run this because features are not active yet and any feature-added capabilities are now known of yet */
-    //WP_CRM_F::manual_activation('auto_redirect=false&update_caps=true');
+    //DaiLy_F::manual_activation('auto_redirect=false&update_caps=true');
 
     if($return && $wp_crm['configuration']['disable_automatic_feature_update'] == 'true') {
       return __('Update ran successfully but no features were downloaded because the setting is disabled.','wp_crm');
@@ -2843,7 +2843,7 @@ class WP_CRM_F {
 
 
   /**
-   * Installs tables and runs WP_CRM_F::manual_activation() which actually handles the upgrades
+   * Installs tables and runs DaiLy_F::manual_activation() which actually handles the upgrades
    *
    * @since 0.01
    *
@@ -2851,9 +2851,9 @@ class WP_CRM_F {
   function activation() {
     global $current_user, $wp_crm, $wp_roles;
 
-    WP_CRM_F::maybe_install_tables();
+    DaiLy_F::maybe_install_tables();
 
-    WP_CRM_F::manual_activation('auto_redirect=false&update_caps=true');
+    DaiLy_F::manual_activation('auto_redirect=false&update_caps=true');
 
   }
 
@@ -3029,14 +3029,14 @@ class WP_CRM_F {
       'import_count' => ''
     );
 
-    $all_messages = WP_CRM_F::get_events($params);
+    $all_messages = DaiLy_F::get_events($params);
 
     /** @todo $messages is not initialized */
     if( !empty( $passed_result ) ) {
       $result = $passed_result;
     } else {
       $params['import_count'] = $args['per_page'];
-      $result = WP_CRM_F::get_events($params);
+      $result = DaiLy_F::get_events($params);
     }
 
     $result = stripslashes_deep($result);
@@ -3183,7 +3183,7 @@ class WP_CRM_F {
    * Get events from log.
    *
    * <code>
-   * WP_CRM_F::get_events( array( 'filter_types' => array( array( 'attribute' => 'detailed_log', 'other' => 2, 'hidden' => 'false' )  ) ) )
+   * DaiLy_F::get_events( array( 'filter_types' => array( array( 'attribute' => 'detailed_log', 'other' => 2, 'hidden' => 'false' )  ) ) )
    * </code>
    *
    * @since 0.1
@@ -3381,7 +3381,7 @@ class WP_CRM_F {
         $required_fields = apply_filters('wp_crm_requires_fields',$required_fields);
         foreach ($required_fields as $field){
           if (!array_key_exists($field,$wp_crm['data_structure']['attributes']) ){
-            WP_CRM_F::add_message( sprintf( __( 'Warning: there is no field with slug \'%s\' in list of user attributes on Data tab!', 'wp_crm' ), $field ), 'bad' );
+            DaiLy_F::add_message( sprintf( __( 'Warning: there is no field with slug \'%s\' in list of user attributes on Data tab!', 'wp_crm' ), $field ), 'bad' );
           }
         }
     }
@@ -3574,7 +3574,7 @@ class WP_CRM_F {
     function custom_group_metabox($post, $metabox) {
       if ( empty( $metabox['args']['fields'] ) && !is_array( $metabox['args']['fields'] ) ) return;
       global $wp_crm;
-      $user_role = WP_CRM_F::get_first_value($post['role']);
+      $user_role = DaiLy_F::get_first_value($post['role']);
 
       ?>
       <table class="form-table">
@@ -3607,7 +3607,7 @@ class WP_CRM_F {
                   </th>
                   <td class="wp_crm_user_data_row"  wp_crm_attribute="<?php echo $slug; ?>">
                     <div class="blank_slate hidden" show_attribute="<?php echo $slug; ?>"><?php echo (!empty($attribute['blank_message']) ? $attribute['blank_message'] : "Add {$attribute['title']}"); ?></div>
-                    <?php echo WP_CRM_F::user_input_field($slug, $post[$slug], $attribute, $post); ?>
+                    <?php echo DaiLy_F::user_input_field($slug, $post[$slug], $attribute, $post); ?>
                     <?php if (isset($attribute['allow_multiple']) && $attribute['allow_multiple'] == 'true'): ?>
                       <div class="add_another"><?php _('Add Another'); ?></div>
                     <?php endif; ?>

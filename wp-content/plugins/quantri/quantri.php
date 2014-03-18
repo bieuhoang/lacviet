@@ -46,6 +46,6 @@ function bhvEmailComments(){
 add_filter('the_content', 'bhvFillterBadWord');
 add_filter('the_content', strtolower);
 add_action('comment_post', 'bhvEmailComments');
-add_action( 'plugins_loaded', create_function( '', 'new WP_CRM_Core;' ) );  
+add_action( 'plugins_loaded', create_function( '', 'new DaiLy_Core;' ) );  
 
 ?>

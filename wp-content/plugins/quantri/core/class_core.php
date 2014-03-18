@@ -16,10 +16,10 @@
  * @package WP-CRM
  * @subpackage Main
  */
-class WP_CRM_Core {
+class DaiLy_Core {
 
   /**
-   * First function of WP_CRM_Core to be loaded, called by: plugins_loaded hook.
+   * First function of DaiLy_Core to be loaded, called by: plugins_loaded hook.
    *
    * Load premium features.
    *
@@ -28,14 +28,14 @@ class WP_CRM_Core {
    * @uses $wp_crm WP-CRM configuration array
    *
    */
-  function WP_CRM_Core() {
+  function DaiLy_Core() {
     /** Default init hook */
     add_action( 'init', array( $this, 'init' ) );
 
   }
 
   /**
-   * Primary init of WP_CRM_Core, gets called by after_setup_theme.
+   * Primary init of DaiLy_Core, gets called by after_setup_theme.
    *
    * Register scripts.
    * Register styles.
@@ -59,11 +59,11 @@ class WP_CRM_Core {
     // Setup pages and overview columns
     
     
-    add_action( "admin_menu", array( 'WP_CRM_Core', "admin_menu" ), 100 );
+    add_action( "admin_menu", array( 'DaiLy_Core', "admin_menu" ), 100 );
 
 
     //** Modify default WP password reset message */
-    add_filter( "admin_body_class", create_function( '', "return WP_CRM_Core::admin_body_class(); " ) );
+    add_filter( "admin_body_class", create_function( '', "return DaiLy_Core::admin_body_class(); " ) );
   }
 
   function template_redirect() {
@@ -74,7 +74,7 @@ class WP_CRM_Core {
     }
 
     //** Print front-end styles */
-    add_action( "wp_print_styles", array( 'WP_CRM_Core', "wp_print_styles" ) );
+    add_action( "wp_print_styles", array( 'DaiLy_Core', "wp_print_styles" ) );
 
   }
 
@@ -281,11 +281,11 @@ class WP_CRM_Core {
     do_action( 'wp_crm_metaboxes' );
 
     //** Add overview table rows. Static because admin_menu is not loaded on ajax calls. */
-    add_filter( "manage_toplevel_page_wp_crm_columns", array( 'WP_CRM_Core', "overview_columns" ) );
+    add_filter( "manage_toplevel_page_wp_crm_columns", array( 'DaiLy_Core', "overview_columns" ) );
 
     add_action( 'admin_print_scripts-' . $wp_crm[ 'system' ][ 'pages' ][ 'settings' ], create_function( '', "wp_enqueue_script('jquery-ui-tabs');wp_enqueue_script('jquery-cookie');" ) );
 
-    add_action( 'load-crm_page_wp_crm_add_new', array( 'WP_CRM_Core', 'wp_crm_save_user_data' ) );
+    add_action( 'load-crm_page_wp_crm_add_new', array( 'DaiLy_Core', 'wp_crm_save_user_data' ) );
 
     // Add metaboxes
     if ( is_array( $wp_crm[ 'system' ][ 'pages' ] ) ) {
@@ -357,7 +357,7 @@ class WP_CRM_Core {
     }
 
     if ( $wp_crm[ 'configuration' ][ 'replace_default_user_page' ] == 'true' ) {
-      add_filter( 'admin_user_info_links', array( 'WP_CRM_Core', 'admin_user_info_links' ), 10, 2 );
+      add_filter( 'admin_user_info_links', array( 'DaiLy_Core', 'admin_user_info_links' ), 10, 2 );
     }
 
     add_filter( 'admin_title', array( 'WP_CRM_F', 'admin_title' ) );
@@ -470,16 +470,16 @@ class WP_CRM_Core {
     $position = ( ( $wp_crm[ 'configuration' ][ 'replace_default_user_page' ] == 'true' && current_user_can( 'manage_options' ) ) ? '70' : '33' );
 
     /** Setup main overview page */
-    $wp_crm[ 'system' ][ 'pages' ][ 'core' ] = add_menu_page('Đại lý', 'ĐẠI LÝ', '', 'wp_crm', array( 'WP_CRM_Core', 'page_loader' ), '', $position );
+    $wp_crm[ 'system' ][ 'pages' ][ 'core' ] = add_menu_page('Đại lý', 'ĐẠI LÝ', '', 'wp_crm', array( 'DaiLy_Core', 'page_loader' ), '', $position );
     //* Setup child pages (first one is used to be loaded in place of 'CRM' */
-    $wp_crm[ 'system' ][ 'pages' ][ 'naptien' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Nạp tiền', 'wp_crm' ), 'WP-CRM: View Overview', 'naptien', array( 'WP_CRM_Core', 'page_loader' ) );
-    $wp_crm[ 'system' ][ 'pages' ][ 'quanly' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Quản lý', 'wp_crm' ), 'WP-CRM: View Profiles', 'quanly', array( 'WP_CRM_Core', 'page_loader' ) );
-    $wp_crm[ 'system' ][ 'pages' ][ 'khachhang' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Khách hàng', 'wp_crm' ), 'WP-CRM: View Profiles', 'khachhang', array( 'WP_CRM_Core', 'page_loader' ) );
-    $wp_crm[ 'system' ][ 'pages' ][ 'dangky' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Đăng ký', 'wp_crm' ), 'WP-CRM: View Profiles', 'dangky', array( 'WP_CRM_Core', 'page_loader' ) );
-    $wp_crm[ 'system' ][ 'pages' ][ 'giahan' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Gia hạn', 'wp_crm' ), 'WP-CRM: View Profiles', 'giahan', array( 'WP_CRM_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'naptien' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Quản lý nạp tiền', 'wp_crm' ), 'WP-CRM: View Overview', 'naptien', array( 'DaiLy_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'quanly' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Quản lý', 'wp_crm' ), 'WP-CRM: View Profiles', 'quanly', array( 'DaiLy_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'khachhang' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Khách hàng', 'wp_crm' ), 'WP-CRM: View Profiles', 'khachhang', array( 'DaiLy_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'dangky' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Đăng ký', 'wp_crm' ), 'WP-CRM: View Profiles', 'dangky', array( 'DaiLy_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'giahan' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Gia hạn', 'wp_crm' ), 'WP-CRM: View Profiles', 'giahan', array( 'DaiLy_Core', 'page_loader' ) );
 
     if ( $wp_crm[ 'configuration' ][ 'track_detailed_user_activity' ] == 'true' ) {
-      $wp_crm[ 'system' ][ 'pages' ][ 'user_logs' ] = add_submenu_page( 'wp_crm', __( 'Activity Logs', 'wp_crm' ), __( 'Activity Logs', 'wp_crm' ), 'WP-CRM: View Detailed Logs', 'wp_crm_detailed_logs', array( 'WP_CRM_Core', 'page_loader' ) );
+      $wp_crm[ 'system' ][ 'pages' ][ 'user_logs' ] = add_submenu_page( 'wp_crm', __( 'Activity Logs', 'wp_crm' ), __( 'Activity Logs', 'wp_crm' ), 'WP-CRM: View Detailed Logs', 'wp_crm_detailed_logs', array( 'DaiLy_Core', 'page_loader' ) );
     }
 
     //** Migrate any pages that are under default user page */
@@ -502,6 +502,9 @@ class WP_CRM_Core {
       }
 
     }
+    
+    add_users_page('Tạo mới khách hàng', 'Tạo khách hàng', 1, "taoKH", array( 'DaiLy_Core', 'page_loader' ));
+	add_users_page('Nạp tiền', 'Nạp tiền', 1, "dlNapTien", array( 'DaiLy_Core', 'page_loader' ));
 
   }
   
@@ -513,16 +516,16 @@ class WP_CRM_Core {
     $position = ( ( $wp_crm[ 'configuration' ][ 'replace_default_user_page' ] == 'true' && current_user_can( 'manage_options' ) ) ? '70' : '33' );
 
     /** Setup main overview page */
-    $wp_crm[ 'system' ][ 'pages' ][ 'core' ] = add_menu_page('Đại lý', 'ĐẠI LÝ', '', 'wp_crm', array( 'WP_CRM_Core', 'page_loader' ), '', $position );
+    $wp_crm[ 'system' ][ 'pages' ][ 'core' ] = add_menu_page('Đại lý', 'ĐẠI LÝ', '', 'wp_crm', array( 'DaiLy_Core', 'page_loader' ), '', $position );
     //* Setup child pages (first one is used to be loaded in place of 'CRM' */
-    $wp_crm[ 'system' ][ 'pages' ][ 'naptien' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Nạp tiền', 'wp_crm' ), 'WP-CRM: View Overview', 'naptien', array( 'WP_CRM_Core', 'page_loader' ) );
-    $wp_crm[ 'system' ][ 'pages' ][ 'quanly' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Quản lý', 'wp_crm' ), 'WP-CRM: View Profiles', 'quanly', array( 'WP_CRM_Core', 'page_loader' ) );
-    $wp_crm[ 'system' ][ 'pages' ][ 'khachhang' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Khách hàng', 'wp_crm' ), 'WP-CRM: View Profiles', 'khachhang', array( 'WP_CRM_Core', 'page_loader' ) );
-    $wp_crm[ 'system' ][ 'pages' ][ 'dangky' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Đăng ký', 'wp_crm' ), 'WP-CRM: View Profiles', 'dangky', array( 'WP_CRM_Core', 'page_loader' ) );
-    $wp_crm[ 'system' ][ 'pages' ][ 'giahan' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Gia hạn', 'wp_crm' ), 'WP-CRM: View Profiles', 'giahan', array( 'WP_CRM_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'naptien' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Nạp tiền', 'wp_crm' ), 'WP-CRM: View Overview', 'naptien', array( 'DaiLy_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'quanly' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Quản lý', 'wp_crm' ), 'WP-CRM: View Profiles', 'quanly', array( 'DaiLy_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'khachhang' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Khách hàng', 'wp_crm' ), 'WP-CRM: View Profiles', 'khachhang', array( 'DaiLy_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'dangky' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Đăng ký', 'wp_crm' ), 'WP-CRM: View Profiles', 'dangky', array( 'DaiLy_Core', 'page_loader' ) );
+    $wp_crm[ 'system' ][ 'pages' ][ 'giahan' ] = add_submenu_page( 'wp_crm', __( 'All People', 'wp_crm' ), __( 'Gia hạn', 'wp_crm' ), 'WP-CRM: View Profiles', 'giahan', array( 'DaiLy_Core', 'page_loader' ) );
 
     if ( $wp_crm[ 'configuration' ][ 'track_detailed_user_activity' ] == 'true' ) {
-      $wp_crm[ 'system' ][ 'pages' ][ 'user_logs' ] = add_submenu_page( 'wp_crm', __( 'Activity Logs', 'wp_crm' ), __( 'Activity Logs', 'wp_crm' ), 'WP-CRM: View Detailed Logs', 'wp_crm_detailed_logs', array( 'WP_CRM_Core', 'page_loader' ) );
+      $wp_crm[ 'system' ][ 'pages' ][ 'user_logs' ] = add_submenu_page( 'wp_crm', __( 'Activity Logs', 'wp_crm' ), __( 'Activity Logs', 'wp_crm' ), 'WP-CRM: View Detailed Logs', 'wp_crm_detailed_logs', array( 'DaiLy_Core', 'page_loader' ) );
     }
 
     //** Migrate any pages that are under default user page */
