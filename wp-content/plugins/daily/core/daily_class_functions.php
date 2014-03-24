@@ -3650,9 +3650,8 @@ class DaiLy_F{
 	    global $wpdb;
 	    $sql = array();
 	    $user_id      = get_current_user_id();
-	    $created = time();
-	    $sql = "INSERT INTO `{$wpdb->base_prefix}nap_tien_log` (`user_id`, `tien`,`noidung`) VALUES ($user_id,$data->tien,$data->noidung)";
-	    error_log("-------------------------".$sql);
+	    $created = date('Y-m-d H:i:s');	    
+	    $sql = "INSERT INTO `{$wpdb->base_prefix}nap_tien_log` (`user_id`, `tien`,`noidung`,`created`, `updated`) VALUES ($user_id,'$data[tien]','$data[noidung]','$created','$created')";
 	    dbDelta( $sql );
     }
 }
