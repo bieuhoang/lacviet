@@ -1,0 +1,92 @@
+		.awm_itemInfo {
+			font-style: italic;
+			font-size: 11px;
+			vertical-align: top;
+			padding-bottom: 0px;
+			padding-top: 0px;
+		}
+		.awm_tab_header {
+			display: inline-block;
+			border: #000066 solid 1px;
+			background-color: #DDDDDD;
+			height: 20px;
+			cursor: pointer;
+			padding: 5px;
+			margin: 0px 5px;
+		}
+		.awm_tab_header_selected {
+			display: inline-block;
+			border-top: #000066 solid 1px;
+			border-left: #000066 solid 1px;
+			border-right: #000066 solid 1px;
+			border-bottom: #FFFFFF solid 1px;
+			background-color: #FFFFFF;
+			height: 20px;
+			cursor: pointer;
+			padding: 5px;
+			margin: 0px 5px;
+		}
+		.awm_tab_body {
+			padding: 15px;
+			margin: 0px;
+			float: none;
+			display: block;
+			background-color: #FFFFFF;
+			top: 0px;
+		}
+		#AWM_tabHeaders {
+			z-index: 2;
+			float: none;
+			display: block;
+			position: relative;
+			top: 0px;
+			margin: 0px;
+			padding: 0px;
+		}
+		#AWM_tabBodies {
+			z-index: 1;
+			float: none;
+			display: block;
+			position: relative;
+			border: #000066 solid;
+			border-width: 1px;
+			top: -1px;
+			margin: 0px;
+			padding: 0px;
+		}
+		#AWM_tab_wrapper {
+			position: relative;
+			margin: 0px;
+			padding: 0px;
+			border: none;
+		}
+		.AWM_section {
+			padding: 5px;
+			background-color: #CCDDFF;
+			font-weight: bold;
+		}
+		#AWM_tab_wrapper input[disabled]{
+			background-color: #EEE;
+			color: #777;
+		}
+		.awm_other{
+			margin: 20px 0px;
+		}
+		.awm_other input{
+			margin-left: 20px;
+		}
+		.awm_menu_position{
+			margin-left: 20px;
+			margin-top: 20px;
+		}
+		#AWM_welcome_title {
+			display: inline-block;
+			font-size: 11px;
+			color: #555555;
+			font-style: italic;
+		}
+		#AWM_welcome_screen {
+			padding: 10px;
+			margin-right: 5px;
+		}
+		
