@@ -2889,7 +2889,6 @@ class DaiLy_F{
       other VARCHAR(255),
       UNIQUE KEY id (id)
     );";
-    error_log("------------CREATE: ".$sql);
     dbDelta( $sql );
 
 
