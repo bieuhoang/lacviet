@@ -149,7 +149,14 @@ class DaiLy_Core {
 			'DaiLy_Core',
 			'daily_core_page_loader'
 		));
-		//$quanly_daily[ 'system' ][ 'pages' ][ 'khachhang' ] = add_submenu_page( 'quanly_daily', __( 'All People', 'quanly_daily' ), __( 'Danh sách khách hàng', 'quanly_daily' ), 'WP-CRM: View Overview', 'dskh', array( 'DaiLy_Core', 'page_loader' ) );    
+		$quanly_daily['system']['pages']['khachhang'] = add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Đăng ký dịch vụ', 'quanly_daily'), 'WP-CRM: View Overview', 'dkdv', array (
+			'DaiLy_Core',
+			'daily_core_page_loader'
+		));
+		$quanly_daily['system']['pages']['khachhang'] = add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Các Dịch vụ đã Đăng ký', 'quanly_daily'), 'WP-CRM: View Overview', 'dsdvdk', array (
+			'DaiLy_Core',
+			'daily_core_page_loader'
+		));
 
 		if ($quanly_daily['configuration']['track_detailed_user_activity'] == 'true') {
 			$quanly_daily['system']['pages']['user_logs'] = add_submenu_page('quanly_daily', __('Activity Logs', 'quanly_daily'), __('Activity Logs', 'quanly_daily'), 'WP-CRM: View Detailed Logs', 'quanly_daily_detailed_logs', array (
@@ -189,7 +196,7 @@ class DaiLy_Core {
 	function daily_core_page_loader() {
 		global $quanly_daily, $screen_layout_columns, $current_screen, $wpdb, $crm_messages, $user_ID, $quanly_daily_user;
 
-		$file_path = Nap_Tien_Path . "/core/ui/{$current_screen->base}.php";
+		$file_path = Daily_Path . "/core/ui/{$current_screen->base}.php";
 
 		if (file_exists($file_path)) {
 			include $file_path;

@@ -9,14 +9,14 @@ Author URI: http://
 License: Lacviet pay by the hour
 */
 /** Plugin Version */
-define('Nap_Tien_Version', '1.0.0');
+define('Daily_Version', '1.0.0');
 
 /** Path for Includes */
-define( 'Nap_Tien_Path', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'Daily_Path', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 
-include_once Nap_Tien_Path . '/core/daily_class_core.php';
+include_once Daily_Path . '/core/daily_class_core.php';
 /** Loads general functions used by WP-crm */
-include_once Nap_Tien_Path . '/core/daily_class_functions.php';
+include_once Daily_Path . '/core/daily_class_functions.php';
 
 //* Register activation hook -> has to be in the main plugin file */
 register_activation_hook( __FILE__, array( 'DaiLy_F', 'daily_f_activation' ) );
