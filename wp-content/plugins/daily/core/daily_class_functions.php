@@ -40,6 +40,9 @@ class DaiLy_F {
 		if (!$wpdb->khach_hang) {
 			$wpdb->khach_hang = $wpdb->base_prefix . 'khach_hang';
 		}
+		if (!$wpdb->dl_dv) {
+			$wpdb->dl_dv = $wpdb->base_prefix . 'dl_dv';
+		}
 
 		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
 
@@ -81,6 +84,19 @@ class DaiLy_F {
 		      UNIQUE KEY id (id)
 		    );";
 		dbDelta($sql);
+		
+		$sql = "CREATE TABLE {$wpdb->dl_dv} (
+		      id mediumint(9) NOT NULL AUTO_INCREMENT,
+		      daiLy mediumint(9) NOT NULL,
+			  dichVu mediumint(9) NOT NULL,							  
+			  start datetime,						  
+			  end datetime,
+			  status int(11),
+			  created datetime,
+			  updated datetime,	
+		      UNIQUE KEY id (id)
+		    );";
+		dbDelta($sql);
 	}
 
 	function add_naptienLog($data) {
@@ -92,13 +108,37 @@ class DaiLy_F {
 		$sql = "INSERT INTO `{$wpdb->base_prefix}nap_tien_log` (`user_id`, `tien`,`noidung`,`created`, `updated`) VALUES ($user_id,'$data[tien]','$data[noidung]','$created','$created')";
 		dbDelta($sql);
 	}
-	function add_add_themKhachHang($data) {
+	function add_themKhachHang($data) {
 		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
 		global $wpdb;
 		$sql = array ();
 		$user_id = get_current_user_id();
 		$created = date('Y-m-d H:i:s');
-		$sql = "INSERT INTO `{$wpdb->base_prefix}_khach_hang`(`name`, `dichVu`, `daiLy`, `status`, `created`, `updated`) VALUES ('$data[name]', '$data[dichvu]', '$user_id', 1,'$created', '$created')";
+		$sql = "INSERT INTO `{$wpdb->base_prefix}khach_hang`(`name`, `dichVu`, `daiLy`, `status`, `created`, `updated`) VALUES ('$data[name]', '$data[dichvu]', '$user_id', 1,'$created', '$created')";
 		dbDelta($sql);
+	}
+	function getDichVuDaiLy(){
+		global $wpdb;
+		$user_id = get_current_user_id();
+		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+		$sql = array ();
+		$sql = "SELECT * FROM `{$wpdb->base_prefix}dich_vu`";
+		$list = $wpdb->get_results($sql);
+		return $list;
+	}
+	function add_dangKyDichVu($data){
+		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+		global $wpdb;
+		$sql = array ();
+		$user_id = get_current_user_id();
+		$created = date('Y-m-d H:i:s');
+		$sql = "SELECT * FROM `{$wpdb->base_prefix}dl_dv` WHERE `daiLy` = '$user_id' AND `dichVu` = '$data[dichvu]'";
+		$list = $wpdb->get_results($sql);
+		if($list != null){
+			return $list;
+		}else{
+			$sql = "INSERT INTO `{$wpdb->base_prefix}dl_dv`(`daiLy`, `dichVu`, `start`, `end`, `status`, `created`, `updated`) VALUES ('$user_id', '$data[dichvu]','$data[start]','$data[end]', 1,'$created', '$created')";
+			dbDelta($sql);
+		}
 	}
 }

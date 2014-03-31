@@ -2,42 +2,40 @@
 Thêm mới khách hàng
 </div>
 <?php
-$sotien = trim($_REQUEST['sotien']);
-$noidung = trim($_REQUEST['noidung']);
-if($noidung != null && $noidung != "" && $sotien != null && $sotien != "" && is_numeric($sotien)){
+$ten = trim($_REQUEST['tenkh']);
+$dv = trim($_REQUEST['dv']);
+if($ten != null && $ten != ""){
 	$data= array();
-	$data["tien"] = $sotien;
-	$data["noidung"] = $noidung;
+	$data["name"] = $ten;
+	$data["dichvu"] = $dv;
 	DaiLy_F::add_themKhachHang($data);
 }
 ?>
-<form id="wp_crm_settings" method="post" action="<?php echo admin_url('admin.php?page=napthemtien'); ?>"  enctype="multipart/form-data" >
+
+<form id="wp_crm_settings" method="post" action="<?php echo admin_url('admin.php?page=themmoikhachhang'); ?>"  enctype="multipart/form-data" >
 <div class="formTitle">Tên khách hàng : </div>
 <span id="errorten" style="color: red"></span><br>
-<input type="text" name="sotien" id="sotien"/> (Đồng)<br>
-<div class="formTitle">Nội dung: </div>
-<span id="errornd" style="color: red"></span><br>
-<textarea rows="4" cols="50" name="noidung" id="noidung">
-</textarea>
+<input type="text" name="tenkh" id="tenkh"/><br>
+<div class="formTitle">Dịch vụ: </div>
+<select name="dv">
+<?php
+$listDvs = DaiLy_F::getDichVuDaiLy();
+foreach($listDvs as $listDv){?>
+	<option value="<?php echo $listDv->id?>"><?php echo $listDv->name;?></option>
+<?php } ?>
+</select>
 <p class="wp_crm_save_changes_row">
-<input type="button" value="GỬI THÔNG TIN NẠP TIỀN" class="button-primary" onclick="nap()">
+<input type="button" value="THÊM KHÁCH HÀNG" class="button-primary" onclick="nap()">
 </p>
 </form>
 <script type="text/javascript">
 	function nap(){
-		var tien = document.getElementById("sotien").value;
-		var noidung = document.getElementById("noidung").value;
-		if(tien === null || tien === "" || isNaN(tien)){
-			document.getElementById("errortien").innerHTML ="Số tiền nạp phải là một số";
+		var ten = document.getElementById("tenkh").value;
+		if(ten === null || ten === ""){
+			document.getElementById("errorten").innerHTML ="Tên khách hàng không được để trống";
 			return false;
 		}else{
-			document.getElementById("errortien").innerHTML ="";
-		}
-		if(noidung === null || noidung === ""){
-			document.getElementById("errornd").innerHTML = "Nhập nội dung(Lý do) nạp tiền";
-			return false;
-		}else{
-			document.getElementById("errornd").innerHTML = "";
+			document.getElementById("errorten").innerHTML ="";
 		}
 		document.getElementById("wp_crm_settings").submit();
 	}
