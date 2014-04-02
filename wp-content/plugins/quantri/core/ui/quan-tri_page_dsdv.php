@@ -10,8 +10,8 @@ if($tenDv != null && $tenDv != ""){
 	$data["status"] = $tinhtrang;
 	quantri_F::qt_themDichVu($data);
 }
-$listDvs = quantri_F::getListDichVu();
-$dsStatusDvs = quantri_F::getListStatusDichVu();
+$listDvs = quantri_F::qt_getListDichVu();
+$dsStatusDvs = quantri_F::qt_getListStatusDichVu();
 $dataDs = array();
 foreach($dsStatusDvs as $dsStatusDv){
 	$dataDs[$dsStatusDv->num] = $dsStatusDv->name;

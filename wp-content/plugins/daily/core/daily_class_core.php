@@ -140,50 +140,27 @@ class DaiLy_Core {
 			'daily_core_page_loader'
 		), '', $position);
 		//* Setup child pages (first one is used to be loaded in place of 'CRM' */
-		$quanly_daily['system']['pages']['naptien'] = add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Nạp thêm tiền', 'quanly_daily'), 'WP-CRM: View Overview', 'napthemtien', array (
+		add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Nạp thêm tiền', 'quanly_daily'), 'WP-CRM: View Overview', 'napthemtien', array (
 			'DaiLy_Core',
 			'daily_core_page_loader'
 		));
 		//$quanly_daily[ 'system' ][ 'pages' ][ 'naptien' ] = add_submenu_page( 'quanly_daily', __( 'All People', 'quanly_daily' ), __( 'Danh sách đã nạp', 'quanly_daily' ), 'WP-CRM: View Overview', 'dsnap', array( 'DaiLy_Core', 'page_loader' ) );
-		$quanly_daily['system']['pages']['khachhang'] = add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Thêm mới khách hàng', 'quanly_daily'), 'WP-CRM: View Overview', 'themmoikhachhang', array (
+		add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Thêm mới khách hàng', 'quanly_daily'), 'WP-CRM: View Overview', 'themmoikhachhang', array (
 			'DaiLy_Core',
 			'daily_core_page_loader'
 		));
-		$quanly_daily['system']['pages']['khachhang'] = add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Đăng ký dịch vụ', 'quanly_daily'), 'WP-CRM: View Overview', 'dkdv', array (
+		add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Đăng ký dịch vụ', 'quanly_daily'), 'WP-CRM: View Overview', 'dkdv', array (
 			'DaiLy_Core',
 			'daily_core_page_loader'
 		));
-		$quanly_daily['system']['pages']['khachhang'] = add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Các Dịch vụ đã Đăng ký', 'quanly_daily'), 'WP-CRM: View Overview', 'dsdvdk', array (
+		add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Các Dịch vụ đã Đăng ký', 'quanly_daily'), 'WP-CRM: View Overview', 'dsdvdk', array (
 			'DaiLy_Core',
 			'daily_core_page_loader'
 		));
-
-		if ($quanly_daily['configuration']['track_detailed_user_activity'] == 'true') {
-			$quanly_daily['system']['pages']['user_logs'] = add_submenu_page('quanly_daily', __('Activity Logs', 'quanly_daily'), __('Activity Logs', 'quanly_daily'), 'WP-CRM: View Detailed Logs', 'quanly_daily_detailed_logs', array (
-				'DaiLy_Core',
-				'daily_core_page_loader'
-			));
-		}
-
-		//** Migrate any pages that are under default user page */
-		if ($quanly_daily['configuration']['replace_default_user_page'] == 'true') {
-
-			$quanly_daily_excluded_sub_pages = apply_filters('quanly_daily_excluded_sub_pages', array (
-				5,
-				10,
-				15
-			));
-			if (is_array($submenu['users.php'])) {
-
-				foreach ($submenu['users.php'] as $sub_key => $sub_pages_data) {
-
-					if (in_array($sub_key, $quanly_daily_excluded_sub_pages)) {
-						continue;
-					}
-				}
-			}
-
-		}
+		add_submenu_page('quanly_daily', __('All People', 'quanly_daily'), __('Gia hạn dịch vụ', 'quanly_daily'), 'WP-CRM: View Overview', 'ghdv', array (
+			'DaiLy_Core',
+			'daily_core_page_loader'
+		));
 	}
 
 	/**

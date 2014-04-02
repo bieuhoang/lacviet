@@ -73,7 +73,7 @@ class quantri_F {
 		$sql = "INSERT INTO `{$wpdb->base_prefix}dich_vu` (`name`, `createdBy`, `status`, `created`, `updated`) VALUES ('$data[name]', $user_id,'$data[status]','$created','$created')";
 		dbDelta($sql);
 	}
-	function getListStatusDichVu(){
+	function qt_getListStatusDichVu(){
 		global $wpdb;
 		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
 		$sql = array ();
@@ -81,7 +81,44 @@ class quantri_F {
 		$list = $wpdb->get_results($sql);
 		return $list;
 	}
-	function getListDichVu(){
+	function qt_getListDichVu($op){
+		global $wpdb;
+		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+		$sql = array ();
+		$dk = "where `status` > 0 AND `dichvu` > 0";
+		if($op!= null && $op[stt] != null && $op[stt] != ""){
+			$dk = $dk."AND `status` = '$op[stt]'";
+		}
+		else{
+		}
+		
+		if($op != null && $op[order] != null && $op[order] != ""){
+			$dk = $dk."ORDER BY $op[order]";
+		}
+		$sql = "SELECT * FROM `{$wpdb->base_prefix}dl_dv` $dk;";
+		$list = $wpdb->get_results($sql);
+		return $list;
+	}
+	
+	function qt_userNameById($id){
+		global $wpdb;
+		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+		$sql = "SELECT * FROM `{$wpdb->base_prefix}users` where ID = $id;";
+		$list = $wpdb->get_results($sql);
+		return $list;
+	}
+	
+	function qt_updateStatusDichVu($id, $type){
+		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+		global $wpdb;
+		$sql = array ();
+		$user_id = get_current_user_id();
+		$created = date('Y-m-d H:i:s');
+		$sql = "Update `{$wpdb->base_prefix}dl_dv` SET `status` = $type WHERE `id` = $id";		
+		$wpdb->get_results($sql);
+	}
+	
+	function qt_listAllDichVu(){
 		global $wpdb;
 		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
 		$sql = array ();
