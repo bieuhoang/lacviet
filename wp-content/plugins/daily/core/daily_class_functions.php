@@ -133,7 +133,6 @@ class DaiLy_F {
 		$user_id = get_current_user_id();
 		$created = date('Y-m-d H:i:s');
 		$sql = "SELECT * FROM `{$wpdb->base_prefix}dl_dv` WHERE `daiLy` = '$user_id' AND `dichVu` = '$data[dichvu]'";
-		error_log("-------------------SQL1:".$sql);
 		$list = $wpdb->get_results($sql);
 		if($list != null){
 			return $list;

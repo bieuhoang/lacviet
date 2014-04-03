@@ -2,6 +2,9 @@
 Danh sách các dịch vụ đang cung cấp
 </div>
 <?php
+if(isset($_GET['idx']) && $_GET['idx']> 0){
+	quantri_F::qt_xoaDvuById($_GET['idx']);
+}
 $tenDv = trim($_REQUEST['tenDv']);
 $tinhtrang = trim($_REQUEST['tinhtrang']);
 if($tenDv != null && $tenDv != ""){
@@ -10,7 +13,7 @@ if($tenDv != null && $tenDv != ""){
 	$data["status"] = $tinhtrang;
 	quantri_F::qt_themDichVu($data);
 }
-$listDvs = quantri_F::qt_getListDichVu();
+$listDvs = quantri_F::qt_getListDichVuCungcap();
 $dsStatusDvs = quantri_F::qt_getListStatusDichVu();
 $dataDs = array();
 foreach($dsStatusDvs as $dsStatusDv){
@@ -24,12 +27,15 @@ foreach($dsStatusDvs as $dsStatusDv){
 		<th>Sửa</th>
 		<th>Xóa</th>
 	</tr>
-	<?php foreach($listDvs as $listDv){ $tinhtrangDv = $dataDs[$listDv->status];?>
+	<?php foreach($listDvs as $listDv){
+		$tinhtrangDv = $dataDs[$listDv->status];?>
 	<tr>
 		<td><?php echo $listDv->name?></td>
 		<td><?php echo $tinhtrangDv;?></td>		
-		<td><a href="#">SỬA</a></td>
-		<td><a href="#">XÓA</a></td>
+		<td><a href="<?php echo admin_url('admin.php?page=themdv&id=').$listDv->id; ?>"><input type="button" value="Sửa" class="button-primary""></a></td>
+		<td><form id="wp_crm_settings" method="post" action="<?php echo admin_url('admin.php?page=dsdv&idx=').$listDv->id; ?>" enctype="multipart/form-data" >
+			<input type="submit" style="background: red;" value="Xóa" class="button-primary"">
+		</form></td>
 	</tr>
 	<?php }?>
 </tbody></table>

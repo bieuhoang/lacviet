@@ -2,20 +2,31 @@
 Thêm mới dịch vụ cung cấp
 </div>
 <?php
+$id = 0;
+$thisDv = array();
+if(isset($_GET['id']) && $_GET['id']> 0){
+	$id = $_GET['id'];
+	$thisDv = quantri_F::qt_getDvuById($id);
+}
 $tenDv = trim($_REQUEST['tenDv']);
 $tinhtrang = trim($_REQUEST['tinhtrang']);
 if($tenDv != null && $tenDv != ""){
 	$data= array();
 	$data["name"] = $tenDv;
 	$data["status"] = $tinhtrang;
-	quantri_F::qt_themDichVu($data);
+	$them = quantri_F::qt_themDichVu($data, $id);
+	if($them != null){
+		echo "<span style='color: red'>Tên dịch vụ đã được sử dụng trên hệ thống</span>";
+	}else{
+		echo "Thêm mới thành công";
+	}
 }
-$listStatuss = quantri_F::getListStatusDichVu();
+$listStatuss = quantri_F::qt_getListStatusDichVu();
 ?>
-<form id="wp_crm_settings" method="post" action="<?php echo admin_url('admin.php?page=themdv'); ?>"  enctype="multipart/form-data" >
+<form id="wp_crm_settings" method="post" action="<?php echo admin_url('admin.php?page=themdv&id=').$id; ?>"  enctype="multipart/form-data" >
 <div class="formTitle">Tên dịch vụ : </div>
 <span id="erorTen" style="color: red"></span><br>
-<input type="text" name="tenDv" id="tenDv"/><br>
+<input type="text" name="tenDv" id="tenDv" value="<?php echo $thisDv[0]->name;?>"/><br>
 <div class="formTitle">Tình trạng: </div>
 <select name="tinhtrang">
 <?php

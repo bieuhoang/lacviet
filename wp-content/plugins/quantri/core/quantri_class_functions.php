@@ -64,14 +64,25 @@ class quantri_F {
 		$sqlInsert = "INSERT INTO `{$wpdb->base_prefix}status`(`type`, `num`, `name`, `created`, `updated`) VALUES ('stDichvu', '4', 'Đã hết hạn','$created','$created')";
 		dbDelta($sqlInsert);
 	}
-	function qt_themDichVu($data) {
+	function qt_themDichVu($data, $id) {
 		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
 		global $wpdb;
 		$sql = array ();
-		$user_id = get_current_user_id();
-		$created = date('Y-m-d H:i:s');
-		$sql = "INSERT INTO `{$wpdb->base_prefix}dich_vu` (`name`, `createdBy`, `status`, `created`, `updated`) VALUES ('$data[name]', $user_id,'$data[status]','$created','$created')";
-		dbDelta($sql);
+		$sql = "SELECT * FROM `{$wpdb->base_prefix}dich_vu` WHERE `name` = '$data[name]'";
+		$list = $wpdb->get_results($sql);
+		if($list != null){
+			return $list;
+		}else{
+			$user_id = get_current_user_id();
+			$created = date('Y-m-d H:i:s');
+			if(isset($id) && $id> 0){
+				$sql = "UPDATE `{$wpdb->base_prefix}dich_vu` SET `name`='$data[name]', `status`='$data[status]', `updated`='$created' where id = $id";
+			}else{
+				$sql = "INSERT INTO `{$wpdb->base_prefix}dich_vu` (`name`, `createdBy`, `status`, `created`, `updated`) VALUES ('$data[name]', $user_id,'$data[status]','$created','$created')";
+			}
+			dbDelta($sql);
+			return null;
+		}
 	}
 	function qt_getListStatusDichVu(){
 		global $wpdb;
@@ -96,6 +107,16 @@ class quantri_F {
 			$dk = $dk."ORDER BY $op[order]";
 		}
 		$sql = "SELECT * FROM `{$wpdb->base_prefix}dl_dv` $dk;";
+		$list = $wpdb->get_results($sql);
+		return $list;
+	}
+	
+	function qt_getListDichVuCungcap($op){
+		global $wpdb;
+		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+		$sql = array ();
+		$dk = "where `status` > 0";
+		$sql = "SELECT * FROM `{$wpdb->base_prefix}dich_vu` $dk;";
 		$list = $wpdb->get_results($sql);
 		return $list;
 	}
@@ -125,5 +146,18 @@ class quantri_F {
 		$sql = "SELECT * FROM `{$wpdb->base_prefix}dich_vu`;";
 		$list = $wpdb->get_results($sql);
 		return $list;
+	}
+	function qt_getDvuById($id){
+		global $wpdb;
+		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+		$sql = "SELECT * FROM `{$wpdb->base_prefix}dich_vu` where ID = $id;";
+		$list = $wpdb->get_results($sql);
+		return $list;
+	}
+	function qt_xoaDvuById($id){
+		global $wpdb;
+		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+		$sql = "DELETE FROM `{$wpdb->base_prefix}dich_vu` where `id` = $id;";
+		$wpdb->get_results($sql);
 	}
 }
